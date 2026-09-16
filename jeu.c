@@ -30,25 +30,34 @@ int demanderColonne(void){
     return n;
 }
 
-int changerJoueur(int joueur) {
-    if(joueur == 1 ){
-        return 2;
+void changerJoueur(int *joueur) {
+    if( *joueur == 1 ){
+        *joueur = 2;
     }else {
-        return 1;
+        *joueur = 1;
     }
 }
 
 void jouerPrototype (void){
     int joueurCourant = 1;
-     printf("------ Debut Jeu ------\n ");
+    int nombreCoups = 0;
 
-    for (int i = 0; i < 7; i++)
+    printf("------ Debut Jeu ------\n ");
+
+    while(nombreCoups < 6)
     {
-        printf("\nTour du joueur %d ", joueurCourant);
-
-        printf("\nLe joueur %d choisit la colonne %d", joueurCourant, demanderColonne());
-        joueurCourant = changerJoueur(joueurCourant);
-        
+        jouerTour(&joueurCourant, &nombreCoups); 
     }
+
+    printf("\nNombre de coups joues : %d \n", nombreCoups);
     printf("------ Fin Jeu ------\n ");
+}
+
+void jouerTour(int *joueurCourant, int *nombreCoups){
+    printf("\nNumero du joueur courant: %d", *joueurCourant);
+    printf("Le joueur %d choisit la colonne %d \n", *joueurCourant, demanderColonne());
+    
+    *nombreCoups = *nombreCoups + 1;
+    
+    changerJoueur(joueurCourant);
 }

@@ -12,11 +12,13 @@
     int demanderColonne(void);
     //Demande une colonne jusqu'à obtenir un numéro valide
 
-    int changerJoueur(int joueur);
+    void changerJoueur(int *joueur);
     // Calcul le num de l'adversaire
 
     void jouerPrototype (void);
     // Simule 6 coups sans mémoriser la grille
 
+    void jouerTour(int *joueurCourant, int *nombreCoups);
+    // Réalise un tour de la version provisoire
 
 #endif 
