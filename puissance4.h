@@ -2,6 +2,11 @@
 #ifndef PUISSANCE4_H
     #define PUISSANCE4_H
 
+    #define NB_LIGNES 6 
+    #define NB_COLONNES 7 
+    #define VIDE 0 
+
+
     
     void afficherRegles (void);
     // Affiche les regles du jeu Puissance 4
@@ -20,5 +25,11 @@
 
     void jouerTour(int *joueurCourant, int *nombreCoups);
     // Réalise un tour de la version provisoire
+
+    void initialiserGrille(int grille[][NB_COLONNES]); 
+    // Place la valeur VIDE dans les 42 cases
+
+    void afficherGrille(int grille[][NB_COLONNES]);
+    //Affiche La grille
 
 #endif 

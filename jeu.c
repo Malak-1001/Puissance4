@@ -42,6 +42,8 @@ void jouerPrototype (void){
     int joueurCourant = 1;
     int nombreCoups = 0;
 
+    int grille[NB_LIGNES][NB_COLONNES];
+
     printf("------ Debut Jeu ------\n ");
 
     while(nombreCoups < 6)
