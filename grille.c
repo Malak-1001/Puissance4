@@ -21,7 +21,7 @@ printf("\n");
         {
             if(j == 0 || j == NB_COLONNES + 1){
                 if(i == NB_LIGNES){
-                    printf("+");
+                    printf("+ ");
                 }else{
                     printf("| ");
                 }
@@ -31,13 +31,17 @@ printf("\n");
             {
                 printf(" %d ", j);
             }else{
-                if (grille[i][j] == 0)
+                // Before : if (grille[i][j] == 0)
+                // Y avait un petit décalage avec l'index j qui causait problème
+                // Quand j== NB_COLONNES on accédait à une case mémoire non défini
+                // C'est pour cela qu'on arrive pas à afficher correctement 
+                if (grille[i][j - 1] == 0)
                 {
                     printf(" . ");
-                }else if (grille[i][j] == 1)
+                }else if (grille[i][j - 1] == 1)
                 {
                     printf(" X ");
-                }else if (grille[i][j] == 2){
+                }else if (grille[i][j - 1] == 2){
                     printf(" O ");
                 }
             }
