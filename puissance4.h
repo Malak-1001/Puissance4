@@ -32,4 +32,21 @@
     void afficherGrille(int grille[][NB_COLONNES]);
     //Affiche La grille
 
+    int colonneLibre(int grille[][NB_COLONNES], int colonne);
+    // Vérifie qu'une colonne est libre
+
+    int placerJeton(int grille[][NB_COLONNES], int colonne, int joueur);
+    // Place un jeton dans la colonne libre et retourne 1 si oui ou 0 s'il n'y a pas eu de placement
+
+    int alignementHorizontal(int grille[][NB_COLONNES], int joueur);
+    //Verifie l'alignement horizontal (4 jetons consécutives) pour le joueur
+    
+    int alignementVertical(int grille[][NB_COLONNES], int joueur);
+    //Verifie l'alignement vertical (4 jetons consécutives) pour le joueur 
+    
+    int alignementDiagonal(int grille[][NB_COLONNES], int joueur); 
+    //Verifie l'alignement diagonal(4 jetons consécutives) pour le joueur choisi
+    
+    int joueurAGagne(int grille[][NB_COLONNES], int joueur);
+
 #endif 

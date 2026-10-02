@@ -10,7 +10,7 @@ void afficherRegles (void){
 }
 
 int colonneValide(int colonne){
-    if( (colonne <1) | (colonne >7)){
+    if( (colonne <0) | (colonne >NB_COLONNES-1)){
         return 0;
     }else {
         return 1;
@@ -21,6 +21,8 @@ int demanderColonne(void){
     int n;
     printf("\nChoisissez une colonne (1-7) :  ");
     scanf("%d", &n);
+
+    n = n - 1;
 
     while( !colonneValide(n)){
         printf("Numero colonne insere invalide. \n Veuillez inserer un autre: ");

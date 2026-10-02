@@ -50,3 +50,91 @@ printf("\n");
     }
 }
 
+
+int colonneLibre(int grille[][NB_COLONNES], int colonne){
+    if(grille[0][colonne - 1] != 0){
+        return 0; // Colonne pas libre
+    }else {
+        return 1; // Colonne Libre
+    }
+}
+
+
+int placerJeton(int grille[][NB_COLONNES], int colonne, int joueur){
+
+    if(! (colonneLibre(grille,colonne))){
+        return 0;  
+    }else {
+        for(int i = NB_LIGNES-1; i>=0 ; i-- ){
+            if((grille[i][colonne-1]) == 0){
+                grille[i][colonne-1] = joueur;
+                return 1;
+            }
+        }
+    }
+    return 0;
+}
+
+
+int alignementHorizontal(int grille[][NB_COLONNES], int joueur){
+    int counter = 0;
+    for(int i = 0; i < NB_LIGNES; i++){
+        for(int j =0 ; j<NB_COLONNES -3; j++){
+            if(grille[i][j] == joueur){
+                counter++ ;
+                if(counter == 4){
+                    return 1 ; // Alignement trouvé
+                }
+            }else{
+                if(counter != 0){
+                    counter =0; 
+                }
+            }
+        }
+    }
+    return 0; // Alignement non trouvé
+}
+
+int alignementVertical(int grille[][NB_COLONNES], int joueur){
+    int counter = 0;
+    for(int j =0 ; j<NB_COLONNES; j++){
+        for(int i = 0; i < NB_LIGNES -3; i++){
+            if(grille[i][j] == joueur){
+                counter++ ;
+                if(counter == 4){
+                    return 1 ; // Alignement trouvé
+                }
+            }else{
+                if(counter != 0){
+                    counter =0; 
+                }
+            }
+        }
+    }
+    return 0; // Alignement non trouvé
+}
+
+
+int alignementDiagonal(int grille[][NB_COLONNES], int joueur){
+    int counter = 0;
+    
+    for(int i = 0; i < NB_LIGNES; i++){
+        for(int j =0 ; j<NB_COLONNES-1; j++){
+            if(grille[i][j] == joueur && (grille[i+1][j+1] == joueur)){
+                counter++;
+                if(counter == 4){
+                    return 1 ; // Alignement trouvé
+                }
+            }else{
+                if(counter != 0){
+                    counter =0; 
+                }
+            }
+        }
+    }
+
+
+    return 0; // Alignement non trouvé
+}
+
+
