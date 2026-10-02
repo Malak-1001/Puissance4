@@ -63,7 +63,7 @@ int colonneLibre(int grille[][NB_COLONNES], int colonne){
 int placerJeton(int grille[][NB_COLONNES], int colonne, int joueur){
 
     if(! (colonneLibre(grille,colonne))){
-        return 0;  
+        return 0;  //,Colonne non libre
     }else {
         for(int i = NB_LIGNES-1; i>=0 ; i-- ){
             if((grille[i][colonne-1]) == 0){
@@ -79,7 +79,7 @@ int placerJeton(int grille[][NB_COLONNES], int colonne, int joueur){
 int alignementHorizontal(int grille[][NB_COLONNES], int joueur){
     int counter = 0;
     for(int i = 0; i < NB_LIGNES; i++){
-        for(int j =0 ; j<NB_COLONNES -3; j++){
+        for(int j =0 ; j<NB_COLONNES; j++){
             if(grille[i][j] == joueur){
                 counter++ ;
                 if(counter == 4){
@@ -98,7 +98,7 @@ int alignementHorizontal(int grille[][NB_COLONNES], int joueur){
 int alignementVertical(int grille[][NB_COLONNES], int joueur){
     int counter = 0;
     for(int j =0 ; j<NB_COLONNES; j++){
-        for(int i = 0; i < NB_LIGNES -3; i++){
+        for(int i = 0; i < NB_LIGNES ; i++){
             if(grille[i][j] == joueur){
                 counter++ ;
                 if(counter == 4){
@@ -116,25 +116,34 @@ int alignementVertical(int grille[][NB_COLONNES], int joueur){
 
 
 int alignementDiagonal(int grille[][NB_COLONNES], int joueur){
-    int counter = 0;
     
-    for(int i = 0; i < NB_LIGNES; i++){
-        for(int j =0 ; j<NB_COLONNES-1; j++){
-            if(grille[i][j] == joueur && (grille[i+1][j+1] == joueur)){
-                counter++;
-                if(counter == 4){
-                    return 1 ; // Alignement trouvé
-                }
-            }else{
-                if(counter != 0){
-                    counter =0; 
-                }
+    for(int i = 0; i < NB_LIGNES-2; i++){
+        for(int j =0 ; j<NB_COLONNES-3; j++){
+            if(grille[i][j] == joueur && (grille[i+1][j+1] == joueur)&&(grille[i+2][j+2] == joueur)&&(grille[i+3][j+3] == joueur)){
+                return 1;
             }
         }
     }
 
+    for(int i = 0; i < NB_LIGNES-3; i++){
+        for(int j = NB_COLONNES-1 ; j > 2; j--){
+            if(grille[i][j] == joueur && (grille[i+1][j-1] == joueur)&&(grille[i+2][j-2] == joueur)&&(grille[i+3][j-3] == joueur)){
+                return 1;
+            }
+        }
+    }
 
     return 0; // Alignement non trouvé
 }
+
+int grillePleine(int grille[][NB_COLONNES]){
+    for(int i=0 ; i< NB_COLONNES; i++){
+        if(colonneLibre(grille,i)){
+            return 0; // Présence d'une colonne libre donc la grille n'est pas pleine  
+        }
+    }
+    return 1; // La grille est pleine
+}
+
 
 

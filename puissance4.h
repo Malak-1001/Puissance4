@@ -23,7 +23,7 @@
     void jouerPrototype (void);
     // Simule 6 coups sans mémoriser la grille
 
-    void jouerTour(int *joueurCourant, int *nombreCoups);
+    void jouerTour(int grille[][NB_COLONNES], int *joueurCourant, int *nombreCoups);
     // Réalise un tour de la version provisoire
 
     void initialiserGrille(int grille[][NB_COLONNES]); 
@@ -48,5 +48,9 @@
     //Verifie l'alignement diagonal(4 jetons consécutives) pour le joueur choisi
     
     int joueurAGagne(int grille[][NB_COLONNES], int joueur);
+    // Verifie si le joueur choisi a gagné 
+
+    int grillePleine(int grille[][NB_COLONNES]);
+    // Verifie si la grille est pleine sans parcourir  
 
 #endif 

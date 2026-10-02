@@ -28,7 +28,6 @@ int demanderColonne(void){
         printf("Numero colonne insere invalide. \n Veuillez inserer un autre: ");
         scanf("%d", &n);
     }
-
     return n;
 }
 
@@ -46,22 +45,54 @@ void jouerPrototype (void){
 
     int grille[NB_LIGNES][NB_COLONNES];
 
+    initialiserGrille(grille);
+
+    afficherGrille(grille);
+
     printf("------ Debut Jeu ------\n ");
 
-    while(nombreCoups < 6)
+    while(!(grillePleine(grille)) && !(joueurAGagne(grille, joueurCourant)))
     {
-        jouerTour(&joueurCourant, &nombreCoups); 
+        jouerTour(grille, &joueurCourant, &nombreCoups); 
+        afficherGrille(grille);
     }
+
+    if((joueurAGagne(grille, joueurCourant))){
+        printf("\n Joueur %d a gagne !", joueurCourant);
+    }
+
+    if(grillePleine(grille)){
+        printf("\n La grille est pleine.");
+    }
+
 
     printf("\nNombre de coups joues : %d \n", nombreCoups);
     printf("------ Fin Jeu ------\n ");
 }
 
-void jouerTour(int *joueurCourant, int *nombreCoups){
+void jouerTour(int grille[][NB_COLONNES], int *joueurCourant, int *nombreCoups){
     printf("\nNumero du joueur courant: %d", *joueurCourant);
-    printf("Le joueur %d choisit la colonne %d \n", *joueurCourant, demanderColonne());
+    int colonne = demanderColonne() + 1;
+    printf("Le joueur %d choisit la colonne %d \n", *joueurCourant, colonne);
     
+    while(!(placerJeton(grille, colonne,*joueurCourant))){
+        printf("\n La colonne %d est pleine!");
+        colonne = demanderColonne();
+        printf("\n Le joueur %d choisit la colonne %d \n", *joueurCourant, colonne+1);
+    }
     *nombreCoups = *nombreCoups + 1;
     
-    changerJoueur(joueurCourant);
+    if(!(grillePleine(grille)) && !(joueurAGagne(grille, *joueurCourant))){
+        changerJoueur(joueurCourant);
+    }
+    
+}
+
+int joueurAGagne(int grille[][NB_COLONNES], int joueur){
+    if((alignementDiagonal(grille, joueur)) || (alignementVertical(grille, joueur)) || (alignementHorizontal(grille, joueur))){
+        return 1;
+    }else {
+        return 0;
+    }
+    
 }
