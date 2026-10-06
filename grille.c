@@ -2,18 +2,18 @@
 #include <stdio.h>
 
 
-void initialiserGrille(int grille[][NB_COLONNES]){
+void initialiserGrille(Partie *partie){
     for (int i = 0; i < NB_LIGNES; i++)
     {
         for (int j = 0; j < NB_COLONNES; j++)
         {
-            grille[i][j]= VIDE;
+            (*partie).grille[i][j]= VIDE;
         }
     }
-    
+    (*partie).nombreJetons = 0; // initialisation du nombre de jetons
 }
 
-void afficherGrille(int grille[][NB_COLONNES]){
+void afficherGrille(Partie *partie){
 printf("\n");
     for (int i = 0; i < NB_LIGNES + 2; i++)
     {
@@ -35,13 +35,13 @@ printf("\n");
                 // Y avait un petit décalage avec l'index j qui causait problème
                 // Quand j== NB_COLONNES on accédait à une case mémoire non défini
                 // C'est pour cela qu'on arrive pas à afficher correctement 
-                if (grille[i][j - 1] == 0)
+                if ((*partie).grille[i][j - 1] == 0)
                 {
                     printf(" . ");
-                }else if (grille[i][j - 1] == 1)
+                }else if ((*partie).grille[i][j - 1] == 1)
                 {
                     printf(" X ");
-                }else if (grille[i][j - 1] == 2){
+                }else if ((*partie).grille[i][j - 1] == 2){
                     printf(" O ");
                 }
             }
@@ -51,8 +51,8 @@ printf("\n");
 }
 
 
-int colonneLibre(int grille[][NB_COLONNES], int colonne){
-    if(grille[0][colonne - 1] != 0){
+int colonneLibre(Partie *partie, int colonne){
+    if((*partie).grille[0][colonne] != 0){
         return 0; // Colonne pas libre
     }else {
         return 1; // Colonne Libre
@@ -60,27 +60,28 @@ int colonneLibre(int grille[][NB_COLONNES], int colonne){
 }
 
 
-int placerJeton(int grille[][NB_COLONNES], int colonne, int joueur){
+int placerJeton(Partie *partie, int colonne){
 
-    if(! (colonneLibre(grille,colonne))){
+    if(! (colonneLibre(partie,colonne))){
         return 0;  //,Colonne non libre
     }else {
         for(int i = NB_LIGNES-1; i>=0 ; i-- ){
-            if((grille[i][colonne-1]) == 0){
-                grille[i][colonne-1] = joueur;
-                return 1;
+            if(((*partie).grille[i][colonne]) == 0){
+                (*partie).grille[i][colonne] = (*partie).joueurs[(*partie).joueurCourant].jeton;
+                (*partie).nombreJetons++;
+                return 1; //Jeton placé
             }
         }
     }
-    return 0;
+    return 0; //Jeton non placé
 }
 
 
-int alignementHorizontal(int grille[][NB_COLONNES], int joueur){
+int alignementHorizontal(Partie *partie, int joueur){
     int counter = 0;
     for(int i = 0; i < NB_LIGNES; i++){
         for(int j =0 ; j<NB_COLONNES; j++){
-            if(grille[i][j] == joueur){
+            if((*partie).grille[i][j] == joueur){
                 counter++ ;
                 if(counter == 4){
                     return 1 ; // Alignement trouvé
@@ -95,11 +96,11 @@ int alignementHorizontal(int grille[][NB_COLONNES], int joueur){
     return 0; // Alignement non trouvé
 }
 
-int alignementVertical(int grille[][NB_COLONNES], int joueur){
+int alignementVertical(Partie *partie, int joueur){
     int counter = 0;
     for(int j =0 ; j<NB_COLONNES; j++){
         for(int i = 0; i < NB_LIGNES ; i++){
-            if(grille[i][j] == joueur){
+            if((*partie).grille[i][j] == joueur){
                 counter++ ;
                 if(counter == 4){
                     return 1 ; // Alignement trouvé
@@ -115,11 +116,11 @@ int alignementVertical(int grille[][NB_COLONNES], int joueur){
 }
 
 
-int alignementDiagonal(int grille[][NB_COLONNES], int joueur){
+int alignementDiagonal(Partie *partie, int joueur){
     
     for(int i = 0; i < NB_LIGNES-2; i++){
         for(int j =0 ; j<NB_COLONNES-3; j++){
-            if(grille[i][j] == joueur && (grille[i+1][j+1] == joueur)&&(grille[i+2][j+2] == joueur)&&(grille[i+3][j+3] == joueur)){
+            if((*partie).grille[i][j] == joueur && ((*partie).grille[i+1][j+1] == joueur)&&((*partie).grille[i+2][j+2] == joueur)&&((*partie).grille[i+3][j+3] == joueur)){
                 return 1;
             }
         }
@@ -127,7 +128,7 @@ int alignementDiagonal(int grille[][NB_COLONNES], int joueur){
 
     for(int i = 0; i < NB_LIGNES-3; i++){
         for(int j = NB_COLONNES-1 ; j > 2; j--){
-            if(grille[i][j] == joueur && (grille[i+1][j-1] == joueur)&&(grille[i+2][j-2] == joueur)&&(grille[i+3][j-3] == joueur)){
+            if((*partie).grille[i][j] == joueur && ((*partie).grille[i+1][j-1] == joueur)&&((*partie).grille[i+2][j-2] == joueur)&&((*partie).grille[i+3][j-3] == joueur)){
                 return 1;
             }
         }
@@ -136,13 +137,12 @@ int alignementDiagonal(int grille[][NB_COLONNES], int joueur){
     return 0; // Alignement non trouvé
 }
 
-int grillePleine(int grille[][NB_COLONNES]){
-    for(int i=0 ; i< NB_COLONNES; i++){
-        if(colonneLibre(grille,i)){
-            return 0; // Présence d'une colonne libre donc la grille n'est pas pleine  
-        }
+int grillePleine(Partie *partie){
+    if((*partie).nombreJetons == NB_LIGNES*NB_COLONNES){
+        return 1;
+    }else{
+        return 0;
     }
-    return 1; // La grille est pleine
 }
 
 
