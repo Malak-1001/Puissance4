@@ -90,4 +90,4 @@ make clean
 - L. Malak Yamina
 - K. Sonia
 
-## License
+All rights reserved
