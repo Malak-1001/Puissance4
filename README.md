@@ -87,7 +87,7 @@ make clean
 
 ## Authors
 
-- Lateb Malak Yamina
+- L. Malak Yamina
 - K. Sonia
 
 ## License
