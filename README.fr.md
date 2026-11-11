@@ -88,4 +88,4 @@ Tableaux 2D, pointeurs, structures, allocation dynamique, entrées/sorties (`sca
 - L. Malak Yamina
 - K. Sonia
 
-## Licence
+Tous les droits sont reservés.
