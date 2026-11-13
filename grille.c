@@ -63,7 +63,7 @@ int colonneLibre(Partie *partie, int colonne){
 int placerJeton(Partie *partie, int colonne){
 
     if(! (colonneLibre(partie,colonne))){
-        return 0;  //,Colonne non libre
+        return 0;  // Colonne non libre
     }else {
         for(int i = NB_LIGNES-1; i>=0 ; i-- ){
             if(((*partie).grille[i][colonne]) == 0){
@@ -92,6 +92,7 @@ int alignementHorizontal(Partie *partie, int joueur){
                 }
             }
         }
+        counter = 0 ;
     }
     return 0; // Alignement non trouvé
 }
@@ -111,6 +112,7 @@ int alignementVertical(Partie *partie, int joueur){
                 }
             }
         }
+        counter = 0 ;
     }
     return 0; // Alignement non trouvé
 }
@@ -118,7 +120,7 @@ int alignementVertical(Partie *partie, int joueur){
 
 int alignementDiagonal(Partie *partie, int joueur){
     
-    for(int i = 0; i < NB_LIGNES-2; i++){
+    for(int i = 0; i < NB_LIGNES-3; i++){
         for(int j =0 ; j<NB_COLONNES-3; j++){
             if((*partie).grille[i][j] == joueur && ((*partie).grille[i+1][j+1] == joueur)&&((*partie).grille[i+2][j+2] == joueur)&&((*partie).grille[i+3][j+3] == joueur)){
                 return 1;

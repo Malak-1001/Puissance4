@@ -12,7 +12,7 @@ void afficherRegles (void){
 }
 
 int colonneValide(int colonne){
-    if( (colonne <0) | (colonne >NB_COLONNES-1)){
+    if( (colonne <0) || (colonne >NB_COLONNES-1)){
         return 0;
     }else {
         return 1;
@@ -141,9 +141,7 @@ void jouerPartie(Partie *partie){
 
     if((joueurAGagne(partie, (*partie).joueurs[(*partie).joueurCourant].jeton))){
         printf("\n - > %s a gagne !!!", (*partie).joueurs[(*partie).joueurCourant].nom);
-    }
-
-    if(grillePleine(partie)){
+    }else if(grillePleine(partie)){
         printf("\n La grille est pleine.\n --> Egalite");
     }
 
