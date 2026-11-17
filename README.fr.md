@@ -3,7 +3,6 @@
 # Puissance 4 en C
 
 Jeu de **Puissance 4** en ligne de commande, pour deux joueurs, écrit en C.
-Projet réalisé en binôme dans le cadre du cours *Introduction au langage C* (L2 Informatique, CY Cergy Paris Université).
 
 ## Aperçu
 
