@@ -3,7 +3,6 @@
 # Connect Four in C
 
 A two-player, command-line **Connect Four** game written in C.
-Built as a pair project for the *Introduction to C* course (2nd-year Computer Science, CY Cergy Paris Université).
 
 ## Preview
 
